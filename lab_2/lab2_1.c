@@ -2,6 +2,10 @@
 #include <math.h>
 
 long double rowNMembers(long double a, int n, int num_members){
+    if (a == 0){
+        return 0.0;
+    }
+
     long double cur = 1, tmp = 0;
     
     for (int i = 0; i < num_members; i++){
@@ -23,6 +27,11 @@ int main(){
           scanf("%d", &num_mem) )){ /* input check */
 
         printf("Wrong input!\n");
+        return -1;
+    }
+
+    if (a < 0 || num_mem < 0 || n <= 0){
+        printf("a, num_mem and n can't be negative!\n");
         return -1;
     }
     

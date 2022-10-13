@@ -2,7 +2,12 @@
 #include <math.h>
 
 long double rowEpsilon(long double a, int n, long double eps, int* cnt){
+    if (a == 0) {
+        return 0.0;
+    }
+
     long double cur = 1.0, prev = 1.0, tmp = 0;
+
     do{
         prev = cur;
         tmp = pow(prev, n);
@@ -26,6 +31,13 @@ int main(){
         printf("Wrong input!\n");
         return -1;
     }
+
+    if (a < 0 || n <= 0) {
+        printf("a and n can't be negative!\n");
+        return -1;
+    }
+
+    eps = fabsl(eps); /* if entered eps is negative */
 
     int precision = round(fabs(log10(eps))), cnt = 0;
     
