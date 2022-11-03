@@ -17,6 +17,7 @@ int main() {
 
     while (state != QUIT) {
         state = getchar();
+        state = toLower(state);
 
         switch (state) {
             case (PRINT) : {
@@ -29,7 +30,7 @@ int main() {
                 scanf("%d %lf", &idx, &val);
 
                 if (idx < 0) {
-                    printf("Index can't be negative!\n");
+                    printf("Wrong index\n");
                     break;
                 }
 
@@ -37,12 +38,12 @@ int main() {
                 break;
             }
 
-            case (POP) : {
+            case (DELETE) : {
                 printf("Now enter desired index and value: ");
                 scanf("%d %lf", &idx, &val);
 
-                if (idx < 0) {
-                    printf("Index can't be negative!\n");
+                if (idx < 0 || idx >= arr_len) {
+                    printf("Wrong index\n");
                     break;
                 }
 
@@ -55,18 +56,13 @@ int main() {
                 break;
             }
 
-            case (INIT) : {
-                printf("to be done\n");
-                break;
-            }
-
             case (QUIT) : {
                 printf("Exiting the program. Goodbye!\n");
                 break;
             }
 
             default : {
-                printf("Pizdets, wrong input!!1!. Please try again: ");
+                printf("Wrong input!!1!. Please try again: ");
             }
         }
 

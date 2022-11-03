@@ -17,4 +17,6 @@ void       splitAndCheck(double*, int*);
 
 double     *initArray(double*, int*);
 
+char       toLower(char);
+
 #endif

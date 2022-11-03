@@ -6,12 +6,11 @@
 #include <stdio_ext.h>
 
 enum input_states {
-    PRINT       = '1',
-    ADD         = '2',
-    POP         = '3',
-    INDIVIDUAL  = '4',
-    INIT        = '5',
-    QUIT        = '6'
+    PRINT       = 'p',
+    ADD         = 'a',
+    DELETE      = 'd',
+    INDIVIDUAL  = 'i',
+    QUIT        = 'q'
 };
 
 

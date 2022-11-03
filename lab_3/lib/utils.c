@@ -64,3 +64,8 @@ double* initArray(double* arr, int* arr_len) {
     arr = (double *) calloc(*arr_len, sizeof(double));
     return arr;
 }
+
+
+char toLower(char ch) {
+    return (ch >= 'A' && ch <= 'Z') ? (ch | 0x60) : (ch);
+}
