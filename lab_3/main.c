@@ -56,6 +56,11 @@ int main() {
                 break;
             }
 
+            case (MENU) : {
+                printMenu();
+                break;
+            }
+
             case (QUIT) : {
                 printf("Exiting the program. Goodbye!\n");
                 break;

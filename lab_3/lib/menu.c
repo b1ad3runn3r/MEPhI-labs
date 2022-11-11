@@ -8,7 +8,8 @@ void printMenu() {
     printf("2. [A]dd element to array.\n");
     printf("3. [D]elete element from array.\n");
     printf("4. [I]ndividual task performing.\n");
-    printf("5. [Q]uit the program\n");
+    printf("5. [M]enu print.\n");
+    printf("6. [Q]uit the program\n");
 
     printf("Please now make your choice: ");
 }

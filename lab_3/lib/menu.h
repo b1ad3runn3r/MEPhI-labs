@@ -10,6 +10,7 @@ enum input_states {
     ADD         = 'a',
     DELETE      = 'd',
     INDIVIDUAL  = 'i',
+    MENU        = 'm',
     QUIT        = 'q'
 };
 
