@@ -16,6 +16,4 @@ enum input_states {
 
 void printMenu(void);
 
-//void processInput(void);
-
 #endif

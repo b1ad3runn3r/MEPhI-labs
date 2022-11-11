@@ -11,9 +11,11 @@ void       printArray(double*, int);
 
 double     *addElement(double*, int*, double, int);
 
-double     *popElement(double*, int*, double, int);
+double     *popElement(double*, int*, int);
 
-void       splitAndCheck(double*, int*);
+int        splitAndCheck(double);
+
+double*    individualTask(double*, int*);
 
 double     *initArray(double*, int*);
 

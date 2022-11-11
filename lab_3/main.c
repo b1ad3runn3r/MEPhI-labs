@@ -39,20 +39,20 @@ int main() {
             }
 
             case (DELETE) : {
-                printf("Now enter desired index and value: ");
-                scanf("%d %lf", &idx, &val);
+                printf("Now enter desired index: ");
+                scanf("%d", &idx);
 
                 if (idx < 0 || idx >= arr_len) {
                     printf("Wrong index\n");
                     break;
                 }
 
-                arr = popElement(arr, &arr_len, val, idx);
+                arr = popElement(arr, &arr_len, idx);
                 break;
             }
 
             case (INDIVIDUAL) : {
-                printf("to be done\n");
+                arr = individualTask(arr, &arr_len);
                 break;
             }
 
