@@ -59,7 +59,7 @@ int splitAndCheck(double num) {
     sprintf(tmp, "%lf", num);
     sscanf(tmp, "%d.%d", &integ, &frac);
 
-    while(!(frac % 10)) {
+    while(!(frac % 10) && frac != 0) {
         frac /= 10;
     }
     
@@ -75,7 +75,7 @@ double* individualTask(double* arr, int* arr_len) {
     for (int i = 0; i < *arr_len; ++i){
         if (splitAndCheck(arr[i])) {
             bad_idx[bad_idx_len - 1] = i;
-            bad_idx = (int *) realloc(bad_idx, sizeof(int) * (*arr_len + 1));
+            bad_idx = (int *) realloc(bad_idx, sizeof(int) * (bad_idx_len + 1));
             bad_idx_len += 1;
         }
     }
@@ -88,7 +88,6 @@ double* individualTask(double* arr, int* arr_len) {
     }
 
     free(bad_idx);
-
     return arr;
 }
 
