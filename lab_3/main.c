@@ -9,8 +9,7 @@ int main() {
     double* arr = NULL;
     double val = 0;
     int arr_len = 0, idx = 0;
-
-    arr = initArray(arr, &arr_len);
+    int init_flag = 0;
 
     /* Implement a FSM (finite state machine) to check the input */
 
@@ -20,6 +19,17 @@ int main() {
         state = toLower(state);
 
         switch (state) {
+            case (INIT) : {
+                if (init_flag) {
+                    printf("Array was initialized before!\n");
+                    break;
+                }
+                
+                arr = initArray(arr, &arr_len);
+                init_flag = 1;
+                break;
+            }
+
             case (PRINT) : {
                 printArray(arr, arr_len);
                 break;

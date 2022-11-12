@@ -2,12 +2,18 @@
 
 
 void printArray(double* arr, int arr_len) {
-    printf("{");
+    if (arr_len > 0) {
+        printf("{");
 
-    for (int i = 0; i < arr_len - 1; ++i) {
-        printf("%lf, ", arr[i]);
+        for (int i = 0; i < arr_len - 1; ++i) {
+            printf("%lf, ", arr[i]);
+        }
+        printf("%lf}\n", arr[arr_len - 1]);
     }
-    printf("%lf}\n", arr[arr_len - 1]);
+    else {
+        printf("{}\n");
+    }
+    
 }
 
 
@@ -32,7 +38,7 @@ double* popElement(double* arr, int* arr_len, int idx) {
         memmove(&arr[idx], &arr[idx + 1], sizeof(double) * (*arr_len - idx - 1));
     } 
 
-    arr = realloc(arr, sizeof(double) * (*arr_len - 1));
+    arr = (double *) realloc(arr, sizeof(double) * (*arr_len - 1));
 
     *arr_len -= 1;
     return arr;
@@ -88,7 +94,19 @@ double* individualTask(double* arr, int* arr_len) {
 
 
 double* initArray(double* arr, int* arr_len) {
+    double val = 0.0;
     arr = (double *) calloc(*arr_len, sizeof(double));
+
+    printf("Now enter desired values. End the input by typing \"end\"\n");
+
+    while(scanf("%lf", &val)) {
+        arr = (double *) realloc(arr, sizeof(double) * (*arr_len + 1));
+        arr[*arr_len] = val;
+        *arr_len += 1;
+        __fpurge(stdin);
+    }
+
+    printf("Array initializing finished!\n");
     return arr;
 }
 

@@ -6,6 +6,7 @@
 #include <stdio_ext.h>
 
 enum input_states {
+    INIT        = 'n',
     PRINT       = 'p',
     ADD         = 'a',
     DELETE      = 'd',

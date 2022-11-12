@@ -4,6 +4,7 @@
 void printMenu() {
     printf("My super cool array processing program!\n");
 
+    printf("0. I[n]itialize the array.\n");
     printf("1. [P]rint the array.\n");
     printf("2. [A]dd element to array.\n");
     printf("3. [D]elete element from array.\n");
