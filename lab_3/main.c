@@ -78,6 +78,7 @@ int main() {
 
             default : {
                 printf("Wrong input!!1!. Please try again: ");
+                break;
             }
         }
 
