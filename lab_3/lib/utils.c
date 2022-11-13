@@ -93,6 +93,12 @@ double* individualTask(double* arr, int* arr_len) {
 
 
 double* initArray(double* arr, int* arr_len) {
+    if (arr) {
+        free(arr);
+    }
+
+    *arr_len = 0;
+    
     double val = 0.0;
     arr = (double *) calloc(*arr_len, sizeof(double));
 
