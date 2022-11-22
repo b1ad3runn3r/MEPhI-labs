@@ -1,0 +1,4 @@
+readline*
+self*
+*.o
+.vscode*
