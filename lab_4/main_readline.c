@@ -3,9 +3,39 @@
 #include <readline/readline.h>
 #include <stdlib.h>
 
-void swap(char** str) { //TODO: check for 0 len string
+
+char* remove_spaces(char* input) {
+    char* dst = calloc(0, sizeof(int));
+    int dst_len = 0;
+    int space_flag = 0;
+
+    for(size_t i = 0; i < strlen(input); i++) {
+        if (input[i] != ' ' && input[i] != '\t') {
+            dst = realloc(dst, sizeof(int) * (++dst_len));
+            dst[dst_len - 1] = input[i];
+            space_flag = 0;
+        }
+        else {  
+            if (!space_flag) {
+                dst = realloc(dst, sizeof(int) * (++dst_len));
+                dst[dst_len - 1] = ' ';
+                space_flag = 1;
+            }
+        }
+    }
+
+    dst[dst_len] = '\0';
+
+    return dst;
+}
+
+
+void swap(char** str) {
+    if (strlen(*str) < 2) {
+        return;
+    }
+
     char tmp = 0;
-    printf("%lu\n", strlen(*str));
 
     for(size_t i = 0; i < strlen(*str) - 1; i += 2) {
         tmp = *(*str + i);
@@ -14,8 +44,9 @@ void swap(char** str) { //TODO: check for 0 len string
     }
 }
 
+
 int main() {
-    char* input;
+    char* input = NULL;
 
     while(1) {
         input = readline("Enter a line: ");
@@ -24,6 +55,7 @@ int main() {
             break;
         }
 
+        input = remove_spaces(input);
         swap(&input);
         printf("%s\n", input);
         
