@@ -37,10 +37,12 @@ void swap(char** str) {
 
     char tmp = 0;
 
-    for(size_t i = 0; i < strlen(*str) - 1; i += 2) {
-        tmp = *(*str + i);
-        *(*str + i) = *(*str + i + 1);
-        *(*str + i + 1) = tmp;
+    for(size_t i = 0; i < strlen(*str); i += 2) {
+        if (*(*str + i) != ' ' && *(*str + i + 1) != ' ') {
+            tmp = *(*str + i);
+            *(*str + i) = *(*str + i + 1);
+            *(*str + i + 1) = tmp;
+        } 
     }
 }
 
