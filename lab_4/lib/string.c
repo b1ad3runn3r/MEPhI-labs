@@ -30,7 +30,7 @@ void swap(char** str) {
 
     char tmp = 0;
 
-    for(size_t i = 0; i < my_strlen(*str); i += 2) {
+    for(size_t i = 0; i < my_strlen(*str) - 1; i += 2) {
         if (*(*str + i) != ' ' && *(*str + i + 1) != ' ') {
             tmp = *(*str + i);
             *(*str + i) = *(*str + i + 1);
