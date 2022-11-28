@@ -9,7 +9,7 @@ size_t my_strlen(char* str) {
         }
     }
 
-    return 0; //TODO: think on error condition
+    return 0;
 }
 
 
@@ -66,21 +66,22 @@ char* remove_spaces(char* input) {
 }
 
 
-char* my_readline(char* prompt) { //add EOF and empty line detection
+char* my_readline(char* prompt) {
     printf("%s", prompt);
 
     char buf[CHUNK + 1] = {0};
     char* result = NULL;
 
-    size_t len = 0, n = 0;
+    size_t len = 0;
+    int scan_res = 0;
     do {
-        n = scanf("%100[^\n]", buf);
-        if (n < 0) {
+        scan_res = scanf("%100[^\n]", buf);
+        if (scan_res < 0) {
             if (!result) {
                 return NULL;
             }
         }
-        else if (n > 0) {
+        else if (scan_res > 0) {
             size_t chunk_len = my_strlen(buf);
             size_t str_len = len + chunk_len;
 
@@ -92,7 +93,7 @@ char* my_readline(char* prompt) { //add EOF and empty line detection
         else {
             scanf("%*c");
         }
-    } while (n > 0);
+    } while (scan_res > 0);
 
     if (len > 0) {
         result[len] = '\0';
