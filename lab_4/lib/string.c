@@ -23,20 +23,22 @@ void my_memcpy(char* dest, char* src, size_t n) {
 }
 
 
-void swap(char** str) {
-    if (my_strlen(*str) < 2) {
-        return;
+char* swap(char* str) {
+    if (my_strlen(str) < 2) {
+        return str;
     }
 
     char tmp = 0;
 
-    for(size_t i = 0; i < my_strlen(*str) - 1; i += 2) {
-        if (*(*str + i) != ' ' && *(*str + i + 1) != ' ') {
-            tmp = *(*str + i);
-            *(*str + i) = *(*str + i + 1);
-            *(*str + i + 1) = tmp;
+    for(size_t i = 0; i < my_strlen(str) - 1; i += 2) {
+        if (str[i] != ' ' && str[i + 1] != ' ') {
+            tmp = str[i];
+            str[i] = str[i + 1];
+            str[i + 1] = tmp;
         } 
     }
+
+    return str;
 }
 
 

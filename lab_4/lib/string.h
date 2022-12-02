@@ -12,7 +12,7 @@ size_t  my_strlen(char*);
 
 void    my_memcpy(char*, char*, size_t);
 
-void    swap(char**);
+char*   swap(char*);
 
 char*   remove_spaces(char*);
 

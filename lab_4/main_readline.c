@@ -34,20 +34,22 @@ char* remove_spaces(char* input) {
 }
 
 
-void swap(char** str) {
-    if (strlen(*str) < 2) {
-        return;
+char* swap(char* str) {
+    if (strlen(str) < 2) {
+        return str;
     }
 
     char tmp = 0;
 
-    for(size_t i = 0; i < strlen(*str) - 1; i += 2) {
-        if (*(*str + i) != ' ' && *(*str + i + 1) != ' ') {
-            tmp = *(*str + i);
-            *(*str + i) = *(*str + i + 1);
-            *(*str + i + 1) = tmp;
+    for(size_t i = 0; i < strlen(str) - 1; i += 2) {
+        if (str[i] != ' ' && str[i + 1] != ' ') {
+            tmp = str[i];
+            str[i] = str[i + 1];
+            str[i + 1] = tmp;
         } 
     }
+
+    return str;
 }
 
 
@@ -64,7 +66,7 @@ int main() {
         }
 
         input = remove_spaces(input);
-        swap(&input);
+        input = swap(input);
         printf("\"%s\"\n", input);
 
         timer = clock() - timer;

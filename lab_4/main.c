@@ -15,7 +15,7 @@ int main() {
         }
 
         input = remove_spaces(input);
-        swap(&input);
+        input = swap(input);
         printf("\"%s\"\n", input);
 
         timer = clock() - timer;

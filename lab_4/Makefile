@@ -12,8 +12,6 @@ OBJ_SELF = main.o string.o
 SRC_READLINE = main_readline.c
 OBJ_READLINE = main_readline.o
 
-#TODO: add default targets
-
 readline_debug:
 	$(CC) $(DEBUG_CFLAGS) -c $(SRC_READLINE)
 	$(CC) $(LDFLAGS) $(OBJ_READLINE) -o readline_debug
