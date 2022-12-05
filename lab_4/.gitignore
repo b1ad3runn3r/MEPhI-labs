@@ -1,4 +1,6 @@
-readline*
-self*
-*.o
+build/*
 .vscode*
+additional/*
+!additional/build.bash
+!additional/Makefile
+*.plist

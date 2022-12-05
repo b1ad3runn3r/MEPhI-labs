@@ -1,6 +1,8 @@
 #include "string.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-size_t my_strlen(char* str) {
+size_t my_strlen(const char* str) {
     const char* char_ptr;
 
     for (char_ptr = str; (size_t)char_ptr != 0; ++char_ptr) {
@@ -23,55 +25,7 @@ void my_memcpy(char* dest, char* src, size_t n) {
 }
 
 
-char* swap(char* str) {
-    if (my_strlen(str) < 2) {
-        return str;
-    }
-
-    char tmp = 0;
-
-    for(size_t i = 0; i < my_strlen(str) - 1; i += 2) {
-        if (str[i] != ' ' && str[i + 1] != ' ') {
-            tmp = str[i];
-            str[i] = str[i + 1];
-            str[i + 1] = tmp;
-        } 
-    }
-
-    return str;
-}
-
-
-char* remove_spaces(char* input) {
-    char* dst = calloc(0, sizeof(char));
-    size_t dst_len = 0;
-    int space_flag = 0;
-
-    for(size_t i = 0; i < my_strlen(input); i++) {
-        if (input[i] != ' ' && input[i] != '\t') {
-            dst = realloc(dst, sizeof(char) * (++dst_len));
-            dst[dst_len - 1] = input[i];
-            space_flag = 0;
-        }
-        else {  
-            if (!space_flag) {
-                dst = realloc(dst, sizeof(char) * (++dst_len));
-                dst[dst_len - 1] = ' ';
-                space_flag = 1;
-            }
-        }
-    }
-
-    dst = realloc(dst, sizeof(char) * (dst_len + 1));
-    dst[dst_len] = '\0';
-
-    free(input);
-
-    return dst;
-}
-
-
-char* my_readline(char* prompt) {
+char* my_readline(const char* prompt) {
     printf("%s", prompt);
 
     char buf[CHUNK + 1] = {0};

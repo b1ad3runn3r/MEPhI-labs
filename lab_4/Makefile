@@ -1,34 +1,39 @@
 CC = clang
-
-RELEASE_CFLAGS =-g0 -O2 -fvisibility=hidden
-
-DEBUG_CFLAGS = -gdwarf-4 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror -O0
-
+CFLAGS = -gdwarf-4 -fno-omit-frame-pointer -Wall -Wextra -Wpedantic -Werror -Og -c
 LDFLAGS = -lreadline
+ANALYZE_FLAGS = --analyze -Xanalyzer -analyzer-output=html
 
-SRC_SELF = main.c lib/*.c
-OBJ_SELF = main.o string.o
+SRCDIR = src
+OBJDIR = build
+REPORT_DIR = reports
 
-SRC_READLINE = main_readline.c
-OBJ_READLINE = main_readline.o
+TARGET = lab4_self lab4_readline
 
-readline_debug:
-	$(CC) $(DEBUG_CFLAGS) -c $(SRC_READLINE)
-	$(CC) $(LDFLAGS) $(OBJ_READLINE) -o readline_debug
+OBJ_READLINE = $(addprefix $(OBJDIR)/, common_readline.o main_readline.o)
+OBJ_SELF = $(addprefix $(OBJDIR)/, common_self.o string.o main_self.o)
+SRC = $(shell find $(SRCDIR) -name *.c) 
 
-readline_release:
-	$(CC) $(RELEASE_CFLAGS) -c $(SRC_READLINE)
-	$(CC) $(LDFLAGS) $(OBJ_READLINE) -o readline_release
+.PHONY: clean
 
-self_debug:
-	$(CC) $(DEBUG_CFLAGS) -c $(SRC_SELF)
-	$(CC) $(OBJ_SELF) -o self_debug
+all: clean $(TARGET)
 
-self_release:
-	$(CC) $(RELEASE_CFLAGS) -c $(SRC_SELF)
-	$(CC) $(OBJ_SELF) -o self_release
+lab4_self: $(OBJ_SELF)
+	$(CC) $(OBJ_SELF) -o $(OBJDIR)/lab4_self
+
+$(OBJ_SELF):
+	$(CC) $(CFLAGS) $(SRCDIR)/lib/string/string.c -o $(OBJDIR)/common_self.o
+	$(CC) $(CFLAGS) $(SRCDIR)/lib/common/common.c -o $(OBJDIR)/string.o
+	$(CC) $(CFLAGS) $(SRCDIR)/main_self.c -o $(OBJDIR)/main_self.o
+
+lab4_readline: $(OBJ_READLINE)
+	$(CC) $(LDFLAGS) $(OBJ_READLINE) -o $(OBJDIR)/lab4_readline 
+
+$(OBJ_READLINE):
+	$(CC) $(CFLAGS) -DREADLINE $(SRCDIR)/lib/common/common.c -o $(OBJDIR)/common_readline.o
+	$(CC) $(CFLAGS) -DREADLINE $(SRCDIR)/main_readline.c -o $(OBJDIR)/main_readline.o
+
+analyze: $(SRC)
+	$(CC) $(ANALYZE_FLAGS) $(SRC) 
 
 clean:
-	rm -rf readline*
-	rm -rf self*
-	rm -rf *.o
+	rm -rf $(OBJDIR)/*
