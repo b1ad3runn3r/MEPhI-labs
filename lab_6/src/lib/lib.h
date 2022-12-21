@@ -14,17 +14,19 @@ typedef struct node{
     struct node* next;
 } node;
 
-void print_list(node* list);
+void print_list(node** list);
 
 void push_back(node** list, char sym);
 
 void free_list(node** list);
 
-int readline(const char* prompt, node** list);
+int readline(node** list, const char* prompt );
 
 int is_cons(char c);
 
 void remove_node(node** list, node* del);
+
+void remove_spaces(node** list);
 
 void remove_cons(node** list);
 

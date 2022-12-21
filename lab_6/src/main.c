@@ -7,13 +7,17 @@ int main() {
     int state = 0;
 
     while(1) {
-        state = readline(">", &list);
+        state = readline(&list, "> ");
         if (state) {
             break;
         }
         
+        remove_spaces(&list);
         remove_cons(&list);
-        print_list(list);
+
+        printf("%s", "Result string: ");
+        print_list(&list);
+
         free_list(&list);
     }
 

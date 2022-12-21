@@ -12,13 +12,14 @@ const char cons[CONS_LEN] =
     'S', 'T', 'V', 'W', 'X', 'Y', 'Z'
 };
 
-void print_list(node* list) {
-    node* ptr = list;
+void print_list(node** list) {
+    node* ptr = *list;
+    printf("\"");
     while (ptr != NULL) {
         printf("%c", ptr->sym);
         ptr = ptr->next;
     }
-    printf("\n");
+    printf("\"\n");
 }
 
 void push_back(node** list, char sym) {
@@ -56,7 +57,7 @@ void free_list(node** list) {
     *list = NULL;
 }
 
-int readline(const char* prompt, node** list) {
+int readline(node** list, const char* prompt) {
     printf("%s", prompt);
     char ch;
 
@@ -64,10 +65,12 @@ int readline(const char* prompt, node** list) {
         if (ch == EOF) {
             return EXIT_FAILURE;
         }
-
         push_back(list, ch);
     }
     push_back(list, '\0');
+
+    printf("%s", "Original string: ");
+    print_list(list);
 
     return EXIT_SUCCESS;
 }
@@ -98,6 +101,41 @@ void remove_node(node** list, node* del) {
     }
     
     free(del);
+}
+
+void remove_spaces(node** list) {
+    node* cur = *list;
+    node* next;
+    node *first, *last;
+    int space_met = 0;
+
+    while(cur != NULL) {
+        last = cur->prev;
+        if (cur->sym != ' ' && cur->sym != '\t') {
+            cur = cur->next;
+            space_met = 0;
+        }
+        else {
+            if (!space_met) {
+                space_met = 1;
+                cur = cur->next;
+            }
+            else {
+                next = cur->next;
+                remove_node(list, cur);
+                cur = next;
+            }
+        }
+    }
+
+    if (last->sym == ' ' || last->sym == '\t') {
+        remove_node(list, last);
+    }
+
+    first = *list;
+    if (first->sym == ' ' || first->sym == '\t') {
+        remove_node(list, first);
+    }
 }
 
 void remove_cons(node** list) {
