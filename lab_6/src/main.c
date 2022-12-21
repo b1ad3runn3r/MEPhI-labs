@@ -2,7 +2,6 @@
 #include "lib/lib.h"
 
 
-
 int main() {
     node* list = NULL;
     int state = 0;
@@ -12,8 +11,8 @@ int main() {
         if (state) {
             break;
         }
-        //remove_cons(&list);
-
+        
+        remove_cons(&list);
         print_list(list);
         free_list(&list);
     }

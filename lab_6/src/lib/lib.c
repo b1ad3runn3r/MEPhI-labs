@@ -16,37 +16,40 @@ const char cons[CONS_LEN] =
     'V', 'W', 'X', 'Z'
 };
 
-void print_list(node* head) {
-    node* cur = head;
-
-    while (cur != NULL) {
-        printf("%c", cur->sym);
-        cur = cur->next;
+void print_list(node* list) {
+    node* ptr = list;
+    while (ptr != NULL) {
+        printf("%c", ptr->sym);
+        ptr = ptr->next;
     }
     printf("\n");
 }
 
-void push_back(node** prev, char sym) {
+void push_back(node** list, char sym) {
     node* new = (node *) malloc(sizeof(node));
-    node* last = *prev;
-
-    new->sym = sym;
+    
+    node* last = NULL;
     new->next = NULL;
+    new->prev = NULL;
+    new->sym = sym;
 
-    if (*prev == NULL) {
-        *prev = new;
-        return;
+    if (*list == NULL) {
+        *list = new;
     }
+    else {
+        last = *list;
+        while (last->next != NULL) {
+            last = last->next;
+        }
 
-    while (last->next != NULL) {
-        last = last->next;
+        last->next = new;
+        new->prev = last;
     }
-
-    last->next = new;
 }
 
-void free_list(node** head) {
-    node* cur = *head;
+
+void free_list(node** list) {
+    node* cur = *list;
     node* next;
 
     while(cur != NULL) {
@@ -54,8 +57,7 @@ void free_list(node** head) {
         free(cur);
         cur = next;
     }
-
-    *head = NULL;
+    *list = NULL;
 }
 
 int readline(const char* prompt, node** list) {
@@ -69,6 +71,7 @@ int readline(const char* prompt, node** list) {
 
         push_back(list, ch);
     }
+    push_back(list, '\0');
 
     return EXIT_SUCCESS;
 }
@@ -79,4 +82,40 @@ int find(char c) {
     }
 
     return 1;
+}
+
+void remove_node(node** list, node* del) {
+    if (*list == NULL || del == NULL) {
+        return;
+    }
+
+    if (del == *list) {
+        *list = del->next;
+    }
+
+    if (del->prev != NULL) {
+        del->prev->next = del->next;
+    }
+
+    if (del->next != NULL) {
+        del->next->prev = del->prev;
+    }
+    
+    free(del);
+}
+
+void remove_cons(node** list) {
+    node* cur = *list;
+    node* next;
+    
+    while(cur != NULL) {
+        if (!find(cur->sym)) {
+            next = cur->next;
+            remove_node(list, cur);
+            cur = next;
+        }
+        else {
+            cur = cur->next;
+        }
+    }
 }

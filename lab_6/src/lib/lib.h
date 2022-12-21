@@ -10,17 +10,22 @@
 
 typedef struct node{
     char sym;
+    struct node* prev;
     struct node* next;
 } node;
 
-void print_list(node* head);
+void print_list(node* list);
 
-void push_back(node** prev, char sym);
+void push_back(node** list, char sym);
 
-void free_list(node** head);
+void free_list(node** list);
 
 int readline(const char* prompt, node** list);
 
 int find(char c);
+
+void remove_node(node** list, node* del);
+
+void remove_cons(node** list);
 
 #endif
