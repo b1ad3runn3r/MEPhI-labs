@@ -127,10 +127,12 @@ void remove_spaces(node** list) {
             }
         }
     }
-
-    if (last->sym == ' ' || last->sym == '\t') {
-        remove_node(list, last);
+    if (last != NULL) {
+        if (last->sym == ' ' || last->sym == '\t') {
+            remove_node(list, last);
+        }
     }
+    
 
     first = *list;
     if (first->sym == ' ' || first->sym == '\t') {
