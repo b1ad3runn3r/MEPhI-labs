@@ -3,17 +3,13 @@
 
 const char cons[CONS_LEN] = 
 {
-    'b', 'c', 'd', 'f', 
-    'g', 'h', 'j', 'k', 
-    'l', 'm', 'n', 'p', 
-    'q', 'r', 's', 't', 
-    'v', 'w', 'x', 'z',
+    'b', 'c', 'd', 'f', 'g', 'h', 'j', 
+    'k', 'l', 'm', 'n', 'p', 'q', 'r', 
+    's', 't', 'v', 'w', 'x', 'y', 'z',
 
-    'B', 'C', 'D', 'F',
-    'G', 'H', 'J', 'K',
-    'L', 'M', 'N', 'P',
-    'Q', 'R', 'S', 'T',
-    'V', 'W', 'X', 'Z'
+    'B', 'C', 'D', 'F', 'G', 'H', 'J', 
+    'K', 'L', 'M', 'N', 'P', 'Q', 'R', 
+    'S', 'T', 'V', 'W', 'X', 'Y', 'Z'
 };
 
 void print_list(node* list) {
@@ -27,7 +23,7 @@ void print_list(node* list) {
 
 void push_back(node** list, char sym) {
     node* new = (node *) malloc(sizeof(node));
-    
+
     node* last = NULL;
     new->next = NULL;
     new->prev = NULL;
@@ -76,12 +72,12 @@ int readline(const char* prompt, node** list) {
     return EXIT_SUCCESS;
 }
 
-int find(char c) {
+int is_cons(char c) {
     for(size_t i = 0; i < CONS_LEN; ++i) {
-        if (cons[i] == c) return 0;
+        if (cons[i] == c) return 1;
     }
 
-    return 1;
+    return 0;
 }
 
 void remove_node(node** list, node* del) {
@@ -109,7 +105,7 @@ void remove_cons(node** list) {
     node* next;
     
     while(cur != NULL) {
-        if (!find(cur->sym)) {
+        if (is_cons(cur->sym)) {
             next = cur->next;
             remove_node(list, cur);
             cur = next;

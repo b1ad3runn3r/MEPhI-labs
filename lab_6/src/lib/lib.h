@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define CONS_LEN 40
+#define CONS_LEN 42
 
 typedef struct node{
     char sym;
@@ -22,7 +22,7 @@ void free_list(node** list);
 
 int readline(const char* prompt, node** list);
 
-int find(char c);
+int is_cons(char c);
 
 void remove_node(node** list, node* del);
 
