@@ -73,26 +73,6 @@ void shell_sort(client* clients, size_t len, int (*compare)(client*, client*, in
     }
 }
 
-/*
-void odd_even_sort(subscriber *arr, size_t len, int (*func)(subscriber*, subscriber*, char**), char **args){
-    bool status = false;
-    while (!status){
-        status = true;
-        for (int i = 0; i < len - 1; i += 2){
-            if((*func)(arr + i, arr + i + 1, args) > 0){
-                swap(arr + i, arr + i + 1);
-                status = false;
-            }
-        }
-        for (int i = 1; i < len - 1; i += 2){
-            if((*func)(arr + i, arr + i + 1, args) > 0){
-                swap(arr + i, arr + i + 1);
-                status = false;
-            }
-        }
-    }
-}
-*/
 void process(client** clients, size_t len, int sort_al, int args) {
     if (sort_al == 0) {
         qsort_r(*clients, len, sizeof(client), &compare, args);

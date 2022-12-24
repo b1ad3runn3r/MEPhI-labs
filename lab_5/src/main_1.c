@@ -9,7 +9,7 @@
 int main(int argc, char** argv) {
     client* clients = NULL;
     size_t len = 0;
-    int opt, algo = 0, field = 0, opt_cnt, ord = 0;
+    int opt, algo = 0, field = 0, opt_cnt = 0, ord = 0;
 
     FILE* in_fp;
     FILE* out_fp;
@@ -68,12 +68,10 @@ int main(int argc, char** argv) {
             case '?':
                 fprintf(stderr, "Unknown option: %c\n", optopt);
                 exit(EXIT_FAILURE);
-                //break;
 
             case ':':
                 fprintf(stderr, "Missing arg for %c\n", optopt);
                 exit(EXIT_FAILURE);
-                //break;
 
             case 1:
                 printf("Non-option arg: %s\n", optarg);
