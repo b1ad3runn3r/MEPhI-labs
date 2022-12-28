@@ -3,21 +3,35 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int parse_line(char* line, client* cli) {
     char* tmp = NULL;
 
     /* Name */
     tmp = strtok(line, ";");
+
+    if (tmp == NULL) {
+        return EXIT_FAILURE;
+    }
+
     cli->name = (char *)calloc(strlen(tmp) + 1, 1);
     if(cli->name == NULL) {
         return EXIT_FAILURE;
     }
     strcpy(cli->name, tmp);
-    
+
 
     /* Phone number */
     tmp = strtok(NULL, ";");
+    if (tmp == NULL) {
+        return EXIT_FAILURE;
+    }
+
+    if(strlen(tmp) > 16) {
+        return EXIT_FAILURE;
+    }
+
     memset(cli->phone, 0, 17);
     strcpy(cli->phone, tmp);
     if (strlen(cli->phone) == 0) {
@@ -26,6 +40,9 @@ int parse_line(char* line, client* cli) {
 
     /* Time */
     tmp = strtok(NULL, ";");
+    if (tmp == NULL) {
+        return EXIT_FAILURE;
+    }
     cli->time = strtoll(tmp, NULL, 10);
     if (cli->time == 0) {
         return EXIT_FAILURE;
@@ -35,15 +52,13 @@ int parse_line(char* line, client* cli) {
 }
 
 int add_entry(client** clients, size_t* len, client cli) {
-    client* new = NULL;
-    new = realloc(*clients, sizeof(client) * (++(*len)));
-    if (new == NULL) {
+    *clients = realloc(*clients, sizeof(client) * (++(*len)));
+    if (*clients == NULL) {
         free_arr(*clients, *len);
         *clients = NULL;
         return EXIT_FAILURE;
     }
 
-    *clients = new;
     (*clients)[*len - 1] = cli;
 
     return EXIT_SUCCESS;

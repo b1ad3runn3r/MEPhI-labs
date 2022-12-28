@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
     while ((opt = getopt(argc, argv, "-:a:f:o:")) != -1) {
         switch(opt) {
             case 'a': // Sort algorithm
-                printf("Option a has arg: %s\n", optarg);
                 if (!strcmp(optarg, "quick_l")) {
                     algo = 0;
                 }
@@ -35,7 +34,6 @@ int main(int argc, char** argv) {
                 break;
 
             case 'f': // Field (Name, Phone or time)
-                printf("Option f has arg: %s\n", optarg);
                 if (!strcmp(optarg, "name")) {
                     field = 1;
                 }
@@ -52,7 +50,6 @@ int main(int argc, char** argv) {
                 break;
 
             case 'o': // Order (Ascend or descend)
-                printf("Option o has arg: %s\n", optarg);
                 if (!strcmp(optarg, "asc")) {
                     field *= 1;
                 }
@@ -74,7 +71,6 @@ int main(int argc, char** argv) {
                 exit(EXIT_FAILURE);
 
             case 1:
-                printf("Non-option arg: %s\n", optarg);
                 if (!opt_cnt) {
                     in_fp = fopen(optarg, "rb");
                     if (in_fp == NULL) {

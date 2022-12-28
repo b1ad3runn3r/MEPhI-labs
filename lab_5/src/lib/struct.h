@@ -8,7 +8,7 @@
 
 typedef struct client {
     char* name;
-    char phone[16];
+    char phone[17];
     time_t time;
 } client;
 

@@ -36,25 +36,26 @@ int compare(client* c1, client* c2, int args) {
     }
 }
 
-void qsort_s(client* clients, int (*compare)(client*, client*, int), int args, int low, int high) {
-    int i, j, pivot, temp;
-    if(low < high){
-        pivot = low;
-        i = low;
-        j = high;
-        while(i<j){
-            while((*compare)(clients + i, clients + pivot, args) <= 0 && i < high)
-                i++;
-            while((*compare)(clients + j, clients + pivot, args) > 0)
-                j--;
-            if ( i < j ){
-                swap(clients + i, clients + j);
-            }
-        }
-        swap(clients + pivot, clients + j);
+int partition(client* clients, int low, int high, int (*compare)(client*, client*, int), int args) {
+    client* pivot = clients + high;
+    int i = (low - 1);
 
-        qsort_s(clients, &compare, args, low, j - 1);
-        qsort_s(clients, &compare, args, j + 1, high);
+    for (int j = low; j < high; j++) {
+        if ((*compare)(clients + j, pivot, args) <= 0) {
+            i++;
+            swap(clients + i, clients + i);
+        }
+    }
+    swap(clients + i + 1, clients + high);
+    return (i + 1);
+}
+
+void quick_sort(client* clients, int low, int high, int (*compare)(client*, client*, int), int args) {
+    if (low < high) {
+        int pi = partition(clients, low, high, compare, args);
+
+        quick_sort(clients, low, pi - 1, compare, args);
+        quick_sort(clients, pi + 1, high, compare, args);
     }
 }
 
@@ -78,7 +79,7 @@ void process(client** clients, size_t len, int sort_al, int args) {
         qsort_r(*clients, len, sizeof(client), &compare, args);
     }
     else if (sort_al == 1) {
-        qsort_s(*clients, &compare, args, 0, (int)(len - 1));
+        quick_sort(*clients, 0, len - 1, &compare, args);
     }
     else {
         shell_sort(*clients, len, &compare, args);

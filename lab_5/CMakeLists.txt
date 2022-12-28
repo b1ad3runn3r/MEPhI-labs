@@ -11,4 +11,4 @@ set(LIB ${SRC}/lib)
 FILE(GLOB LIB_SRC ${LIB}/*.c)
 
 add_executable(lab5_1 ${SRC}/main_1.c ${LIB_SRC})
-# add_executable(lab5_2 ${SRC}/main_2.c ${LIB_SRC})
+add_executable(lab5_2 ${SRC}/main_2.c ${LIB_SRC})
