@@ -7,20 +7,33 @@
 
 int parse_line(char* line, client* cli) {
     char* tmp = NULL;
+    int cnt = 0;
+    for(int i = 0; i < strlen(line); i++) {
+        if (line[i] == ';') {
+            cnt += 1;
+        }
+    }
+    for(int i = 0; i < strlen(line) - 1; i++) {
+        if (line[i] == ';' && line[i + 1] == ';') {
+            return EXIT_FAILURE; //костыли, люблю запах костылей по утрам
+        }
+    }
+
+    if (cnt != 2) {
+        return EXIT_FAILURE;
+    }
 
     /* Name */
     tmp = strtok(line, ";");
 
-    if (tmp == NULL) {
+    if (tmp == NULL || strlen(tmp) == 0) {
         return EXIT_FAILURE;
     }
 
-    cli->name = (char *)calloc(strlen(tmp) + 1, 1);
+    cli->name = strdup(tmp);
     if(cli->name == NULL) {
         return EXIT_FAILURE;
     }
-    strcpy(cli->name, tmp);
-
 
     /* Phone number */
     tmp = strtok(NULL, ";");
@@ -28,25 +41,26 @@ int parse_line(char* line, client* cli) {
         return EXIT_FAILURE;
     }
 
-    if(strlen(tmp) > 16) {
+    if(strlen(tmp) > 16 || strlen(tmp) == 0) {
         return EXIT_FAILURE;
     }
 
     memset(cli->phone, 0, 17);
     strcpy(cli->phone, tmp);
-    if (strlen(cli->phone) == 0) {
-        return EXIT_FAILURE; //TODO: parse zero-len fields
-    }
 
     /* Time */
     tmp = strtok(NULL, ";");
     if (tmp == NULL) {
         return EXIT_FAILURE;
     }
-    cli->time = strtoll(tmp, NULL, 10);
-    if (cli->time == 0) {
-        return EXIT_FAILURE;
+
+    for(int i = 0; i < strlen(tmp); i++) {
+        if (tmp[i] < '0' || tmp[i] > '9') {
+            return EXIT_FAILURE;
+        }
     }
+
+    cli->time = strtoll(tmp, NULL, 10);
 
     return EXIT_SUCCESS;
 }
@@ -67,18 +81,19 @@ int add_entry(client** clients, size_t* len, client cli) {
 int read_from_file(FILE* fp, client** clients, size_t* clients_len) {
     client cli;
 
-    size_t n_line = 0, len = 0;
+    size_t line_num = 0, s_len = 0;
     char* line = NULL;
 
-    while (getline(&line, &len, fp) != -1) {
-        ++n_line;
-        len = strlen(line);
-        if (len > 0) {
-            if (line[len - 1] == '\n') {
-                line[len - 1] = '\0';
+    while (getline(&line, &s_len, fp) != -1) {
+        
+        s_len = strlen(line);
+        if (s_len > 0) {
+            if (line[s_len - 1] == '\n') {
+                line[s_len - 1] = '\0';
             }
         }
 
+        ++line_num;
         if(!parse_line(line, &cli)) {
             if (add_entry(clients, clients_len, cli)) {
                 free(cli.name);
@@ -90,7 +105,7 @@ int read_from_file(FILE* fp, client** clients, size_t* clients_len) {
             }
         }
         else {
-            fprintf(stderr, "Unable to parse the line %zu!\n", n_line);
+            fprintf(stderr, "Can't parse line %zu!\n", n_line);
         }
     }
 
