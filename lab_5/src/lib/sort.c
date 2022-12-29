@@ -43,7 +43,7 @@ int partition(client* clients, int low, int high, int (*compare)(client*, client
     for (int j = low; j < high; j++) {
         if ((*compare)(clients + j, pivot, args) <= 0) {
             i++;
-            swap(clients + i, clients + i);
+            swap(clients + i, clients + j);
         }
     }
     swap(clients + i + 1, clients + high);
