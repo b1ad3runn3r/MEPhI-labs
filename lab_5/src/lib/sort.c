@@ -31,23 +31,23 @@ int compare(client* c1, client* c2, int args) {
             return strcmp(c2->phone, c1->phone);
         }
         else {
-            return c2->time - c1->time; // TODO: fix size_t from int function return
+            return c2->time - c1->time;
         }
     }
 }
 
 int partition(client* clients, int low, int high, int (*compare)(client*, client*, int), int args) {
-    client* pivot = clients + high;
-    int i = (low - 1);
+    client* piv = clients + high;
+    int cnt = (low - 1);
 
     for (int j = low; j < high; j++) {
-        if ((*compare)(clients + j, pivot, args) <= 0) {
-            i++;
-            swap(clients + i, clients + j);
+        if ((*compare)(clients + j, piv, args) <= 0) {
+            cnt++;
+            swap(clients + cnt, clients + j);
         }
     }
-    swap(clients + i + 1, clients + high);
-    return (i + 1);
+    swap(clients + cnt + 1, clients + high);
+    return (cnt + 1);
 }
 
 void quick_sort(client* clients, int low, int high, int (*compare)(client*, client*, int), int args) {

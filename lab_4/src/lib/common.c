@@ -1,13 +1,13 @@
 #include "common.h"
 #include <stdlib.h>
+
 #ifdef READLINE
     #include <string.h>
     #define __strlen strlen
 #else
-    #include "../string/string.h"
+    #include "string.h"
     #define __strlen my_strlen
 #endif
-
 
 char* swap(char* str) {
     if (__strlen(str) < 2) {

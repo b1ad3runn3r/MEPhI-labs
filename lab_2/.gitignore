@@ -2,13 +2,4 @@
 lab2_1
 lab2_2
 *.o
-
-additional/bin/*.o
-additional/bin/statically-linked
-additional/bin/use-shared-library
-
-additional/bin/shared/*.o
-additional/bin/shared/*.so
-
-additional/bin/static/*.a
-additional/bin/static/*.o 
+build

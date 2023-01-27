@@ -7,29 +7,28 @@
 #include <string.h>
 #include <time.h>
 
-const char abc[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,./<>?!@#$^&*()_+-={}[]|";
-const char nums[] = "0123456789+ ";
+const char abc[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,./<>?!@#$^&*()_+-={}[]|"; // len = 86
+const char nums[] = "0123456789+ "; // len = 12
 
 client* gen_arr(int entries) {
-    
     client tmp = {0};
     client* arr_res = NULL;
     size_t len = 0;
     char* res = NULL;
 
     for (int j = 0; j < entries; j++) {
-        res = (char *)calloc(20 + 1 + 10 + 1 + 5 + 1, sizeof(char));
-        for(int i = 0; i < 20; i++) {
+        res = (char *)calloc(38, sizeof(char)); // 38 = 20 + 1 + 10 + 1 + 5 + 1
+        for(int i = 0; i < 20; i++) { // Name
             res[i] = abc[rand() % 86];
         }
         res[20] = ';';
 
-        for(int i = 0; i < 10; ++i) {
+        for(int i = 0; i < 10; ++i) { // Phone
             res[i + 21] = abc[rand() % 86];
         }
         res[31] = ';';
 
-        for(int i = 0; i < 5; ++i) {
+        for(int i = 0; i < 5; ++i) { // Time
             res[i + 32] = nums[rand() % 12];
         }
         res[37] = '\0';
@@ -38,8 +37,6 @@ client* gen_arr(int entries) {
         add_entry(&arr_res, &len, tmp);
         free(res);
     }
-    
-
     return arr_res;
 }
 

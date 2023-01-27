@@ -81,31 +81,30 @@ int add_entry(client** clients, size_t* len, client cli) {
 int read_from_file(FILE* fp, client** clients, size_t* clients_len) {
     client cli;
 
-    size_t line_num = 0, s_len = 0;
+    size_t line_num = 0;
+    size_t s_len = 0;
     char* line = NULL;
 
     while (getline(&line, &s_len, fp) != -1) {
         
         s_len = strlen(line);
-        if (s_len > 0) {
-            if (line[s_len - 1] == '\n') {
-                line[s_len - 1] = '\0';
-            }
+        if (line[s_len - 1] == '\n') {
+            line[s_len - 1] = '\0';
         }
 
-        ++line_num;
+        line_num += 1;
         if(!parse_line(line, &cli)) {
             if (add_entry(clients, clients_len, cli)) {
+                free(line);
                 free(cli.name);
                 if (*clients != NULL) {
                     free_arr(*clients, *clients_len);
                 }
-                free(line);
                 return EXIT_FAILURE;
             }
         }
         else {
-            fprintf(stderr, "Can't parse line %zu!\n", n_line);
+            fprintf(stderr, "Can't parse line %zu!\n", line_num);
         }
     }
 

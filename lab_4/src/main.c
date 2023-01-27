@@ -1,17 +1,24 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "lib/common/common.h"
-#include <readline/readline.h>
+#include "lib/string.h"
+#include "lib/common.h"
+
+#ifdef READLINE
+    #include <readline/readline.h>
+    #define __readline readline
+#else
+    #define __readline my_readline
+#endif
 
 int main() {
     char* input = NULL;
     clock_t timer;
-
+    
     while(1) {
         timer = clock();
-        input = readline("Enter a line: ");
-        
+        input = __readline("Enter a line: ");
+
         if (!input) {
             break;
         }
@@ -23,7 +30,7 @@ int main() {
         timer = clock() - timer;
         double time_taken = (double)timer / CLOCKS_PER_SEC;
         printf("Took %lf seconds!\n", time_taken);
-        
+
         free(input);
     }
 
